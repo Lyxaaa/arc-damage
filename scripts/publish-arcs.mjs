@@ -1,4 +1,5 @@
-// Copies extracted glbs from data/raw/arcs into web/public/arcs and writes index.json (code, name, meshes).
+// Copies extracted glbs from data/raw/arcs into web/public/arcs and writes index.json (code, name, meshes) and parts.json.
+import { buildParts } from './parts-lib.mjs'
 import { cpSync, mkdirSync, readdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs'
 
 const src = 'data/raw/arcs'
@@ -11,6 +12,8 @@ for (const code of readdirSync(src)) {
   const meshes = readdirSync(`${src}/${code}`).filter((f) => f.endsWith('.glb'))
   mkdirSync(`${dst}/${code}`)
   for (const m of meshes) cpSync(`${src}/${code}/${m}`, `${dst}/${code}/${m}`)
+  const bp = buildParts(`${src}/${code}`)
+  writeFileSync(`${dst}/${code}/parts.json`, JSON.stringify(bp))
   index.push({ code, name, meshes })
 }
 index.sort((a, b) => a.name.localeCompare(b.name))

@@ -76,6 +76,7 @@ switch (args.ElementAtOrDefault(0))
                 }
                 catch (Exception e) { Console.Error.WriteLine($"{code}: {m}: {e.Message}"); }
             }
+            if (a["cssm"] != null) DumpJson(root + (string)a["cssm"]! + ".uasset", outDir);
             foreach (var k in new[] { "cssc", "cs", "balancing", "meta" })
                 if (a[k] != null)
                     try { DumpJson(dir + (string)a[k]! + ".uasset", outDir); }
