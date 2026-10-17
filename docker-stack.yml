@@ -3,7 +3,7 @@
 # The only manual step is copying the game-derived ARC data (private, not in git) to the host:
 #   /opt/docker/arc-damage/arcs   <- contents of web/public/arcs (or deploy/arcs from scripts/package-for-host.sh)
 #
-# No ports are published. The container joins the external 'lyxaa-cloud' network, where your existing
+# Port ${PORT:-7707} is also published on the host for direct access (http://<host>:7707/). The container joins the external 'lyxaa-cloud' network, where your existing
 # NGINX (mahon.dev) reaches it as http://arc-damage:80. Add a server/location there, e.g.:
 #   server { server_name arc.mahon.dev; location / { proxy_pass http://arc-damage:80; } }
 # (use a variable + resolver if nginx should start even when this container is down)
@@ -17,6 +17,8 @@ services:
   viewer:
     image: node:22-alpine
     container_name: arc-damage
+    ports:
+      - "${PORT:-7707}:80"
     networks:
       - lyxaa-cloud
     environment:
@@ -42,7 +44,7 @@ services:
         rm -rf /usr/share/nginx/html/arcs
         rm -rf /build
         if [ -z "$$(ls -A /data/arcs 2>/dev/null)" ]; then echo "WARNING: /data/arcs is empty - copy the ARC data to /opt/docker/arc-damage/arcs on the host"; fi
-        mkdir -p /etc/nginx/http.d
+        mkdir -p /etc/nginx/http.d /run/nginx
         cat > /etc/nginx/http.d/default.conf <<'CONF'
         server {
           listen 80;
