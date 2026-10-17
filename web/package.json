@@ -9,7 +9,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "probe": "node ../scripts/probe.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "validate": "node ../scripts/validate.mjs",
+    "check": "tsc -b && vitest run && node ../scripts/validate.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
