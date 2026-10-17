@@ -1,21 +1,45 @@
-# ARC damage visualiser - paste into Portainer (Stacks > Add stack > Web editor). No image build needed.
-# Host layout (create with scripts/package-for-host.sh, then copy to the home server):
-#   /opt/docker/arc-damage/app    built web app (contents of web/dist, without arcs)
-#   /opt/docker/arc-damage/arcs   game-derived ARC data (from web/public/arcs) - copied manually, private
+# ARC damage visualiser - paste into Portainer (Stacks > Add stack > Web editor) and deploy.
+# On start, the container clones the repo from GitHub, builds the web app and serves it with nginx.
+# The only manual step is copying the game-derived ARC data (private, not in git) to the host:
+#   /opt/docker/arc-damage/arcs   <- contents of web/public/arcs (or deploy/arcs from scripts/package-for-host.sh)
 # Then open http://<host>:8080/?arc=HeavyDroneMissile
+#
+# To update the app: restart/recreate the container (it pulls and rebuilds). First start takes a few minutes.
+# Optional stack environment variables:
+#   GIT_REPO    default https://github.com/Lyxaaa/arc-damage.git
+#   GIT_BRANCH  default main
+#   GIT_TOKEN   only needed if the repo is private (GitHub personal access token with read access)
+#   PORT        default 8080
 services:
   viewer:
-    image: nginx:alpine
+    image: node:22-alpine
     ports:
-      - "8080:80"
+      - "${PORT:-8080}:80"
+    environment:
+      GIT_REPO: ${GIT_REPO:-https://github.com/Lyxaaa/arc-damage.git}
+      GIT_BRANCH: ${GIT_BRANCH:-main}
+      GIT_TOKEN: ${GIT_TOKEN:-}
     volumes:
-      - /opt/docker/arc-damage/app:/usr/share/nginx/html:ro
       - /opt/docker/arc-damage/arcs:/data/arcs:ro
+      - npm-cache:/root/.npm
     entrypoint:
       - /bin/sh
-      - -c
+      - -euc
       - |
-        cat > /etc/nginx/conf.d/default.conf <<'CONF'
+        apk add --no-cache git nginx >/dev/null
+        url="$$GIT_REPO"
+        if [ -n "$$GIT_TOKEN" ]; then url="$$(echo "$$GIT_REPO" | sed "s#https://#https://x-access-token:$$GIT_TOKEN@#")"; fi
+        rm -rf /build && git clone --depth 1 --branch "$$GIT_BRANCH" "$$url" /build
+        cd /build/web
+        npm ci --no-audit --no-fund
+        npx vite build
+        mkdir -p /usr/share/nginx/html
+        cp -r dist/. /usr/share/nginx/html/
+        rm -rf /usr/share/nginx/html/arcs
+        rm -rf /build
+        if [ -z "$$(ls -A /data/arcs 2>/dev/null)" ]; then echo "WARNING: /data/arcs is empty - copy the ARC data to /opt/docker/arc-damage/arcs on the host"; fi
+        mkdir -p /etc/nginx/http.d
+        cat > /etc/nginx/http.d/default.conf <<'CONF'
         server {
           listen 80;
           root /usr/share/nginx/html;
@@ -28,3 +52,6 @@ services:
         CONF
         exec nginx -g 'daemon off;'
     restart: unless-stopped
+
+volumes:
+  npm-cache:
