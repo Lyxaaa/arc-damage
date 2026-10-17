@@ -1,0 +1,22 @@
+# Docker Stack for the ARC damage visualiser (private use; contains game-derived data via the bind mount).
+#
+#   1. Build the app image (swarm stacks can't build):   docker build -t arc-viewer:latest .
+#   2. Generate the data on the host if not already:     node scripts/publish-arcs.mjs   (fills web/public/arcs)
+#   3. Deploy:   ARCS_DIR=$PWD/web/public/arcs docker stack deploy -c docker-stack.yml arc
+#      (single node: `docker swarm init` first). Open http://<host>:8080/?arc=HeavyDroneMissile
+#   Without swarm:   ARCS_DIR=$PWD/web/public/arcs docker compose -f docker-stack.yml up -d
+version: "3.8"
+services:
+  viewer:
+    image: arc-viewer:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - type: bind
+        source: ${ARCS_DIR:?set ARCS_DIR to the absolute path of web/public/arcs}
+        target: /usr/share/nginx/html/arcs
+        read_only: true
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
