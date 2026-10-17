@@ -5,6 +5,7 @@ import * as THREE from 'three'
 import { LAYER_COLOR, buildTree, splitByBone, type Layer, type PartInfo, type TreeNode } from './parts'
 import { useView } from './store'
 import { evaluate } from './loadout'
+import { TIERS, catchAll, suggestForArc, type CatchAll } from './suggest'
 import { grenadeKill, grenadesToBreak, killPath, shotsToBreak, type Throwable, type Weapon } from './damage'
 
 declare global {
@@ -119,6 +120,63 @@ function Shots({ w, sel, parts }: { w: Weapon; sel: PartInfo; parts: PartInfo[] 
   )
 }
 
+function Suggestions({ weapons, throwables, parts }: { weapons: Weapon[]; throwables: Throwable[]; parts: PartInfo[] }) {
+  const { setWeapon, setThrowable, setLoadout } = useView()
+  const [all, setAll] = useState<CatchAll[] | null>(null)
+  const sugg = useMemo(() => suggestForArc(weapons, throwables, parts), [weapons, throwables, parts])
+  const apply = (s: (typeof sugg)[number], i: number) => {
+    const acc = TIERS[i].accuracy
+    if (s.kind === 'weapon') {
+      setWeapon(s.id)
+      setThrowable(null)
+      setLoadout({ rounds: s.counts[i], grenades: 0, accuracy: acc })
+    } else {
+      setThrowable(s.id)
+      setWeapon(null)
+      setLoadout({ rounds: 0, grenades: s.counts[i], accuracy: acc })
+    }
+  }
+  const loadAll = async () => {
+    const idx: ArcEntry[] = await fetch('/arcs/index.json').then((r) => r.json())
+    const sets = await Promise.all(idx.map((a) => fetch(`/arcs/${a.code}/parts.json`).then((r) => r.json()).then((f: PartsFile) => f.parts)))
+    setAll(catchAll(weapons, sets))
+  }
+  if (!sugg.length) return null
+  return (
+    <details style={{ fontSize: 12 }} open>
+      <summary style={{ cursor: 'pointer' }}>Suggested loadouts <span style={{ color: '#8a949d' }}>· estimate</span></summary>
+      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <thead>
+          <tr style={{ color: '#8a949d', textAlign: 'left' }}>
+            <th></th>{TIERS.map((t) => <th key={t.label} title={`${t.margin}× kill at ${t.accuracy * 100}% accuracy`}>{t.label === 'In case you miss' ? 'Spare' : t.label}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {sugg.map((s) => (
+            <tr key={s.id}>
+              <td>{s.name}</td>
+              {s.counts.map((c, i) => (
+                <td key={i}><button onClick={() => apply(s, i)} title="Load into builder" style={{ all: 'unset', cursor: 'pointer', textDecoration: 'underline dotted' }}>{c}</button></td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div style={{ color: '#8a949d' }}>Weapon rows are rounds, grenade row is grenades. Minimum = exact kill at 100% accuracy; Ideal = 125% at 70%; Spare = 200% at 70%.</div>
+      <div style={{ marginTop: 4 }}>
+        {all ? (
+          <>
+            <b>Catch-all (Ideal rounds, all ARCs)</b>
+            {all.map((c) => <div key={c.id}>{c.name}: median {c.median}, worst {c.worst} ({c.arcs} ARCs)</div>)}
+          </>
+        ) : (
+          <button onClick={loadAll}>Catch-all loadouts</button>
+        )}
+      </div>
+    </details>
+  )
+}
+
 function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
   const { strip, ghost, setStrip, setGhost, reset, selected, weapon, setWeapon, throwable, setThrowable, rounds, grenades, accuracy, setLoadout } = useView()
   const [weapons, setWeapons] = useState<Weapon[]>([])
@@ -165,6 +223,7 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
             <span style={{ color: '#8a949d' }}> · estimate</span>
           </div>
         )}
+        {weapons.length > 0 && <Suggestions weapons={weapons} throwables={throwables} parts={parts} />}
         {kp && <div style={{ fontSize: 12 }}>Kill (est.): {kp.total} {w!.id} hit(s) via {kp.bone}{kp.plateHits ? ` (${kp.plateHits} on plates)` : ''}</div>}
         {gk && <div style={{ fontSize: 12 }}>Kill (est.): {gk.count} {g!.id} via {gk.bone}</div>}
         <button onClick={reset} style={{ alignSelf: 'flex-start' }}>Reset</button>
