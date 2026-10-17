@@ -1,22 +1,30 @@
-# Docker Stack for the ARC damage visualiser (private use; contains game-derived data via the bind mount).
-#
-#   1. Build the app image (swarm stacks can't build):   docker build -t arc-viewer:latest .
-#   2. Generate the data on the host if not already:     node scripts/publish-arcs.mjs   (fills web/public/arcs)
-#   3. Deploy:   ARCS_DIR=$PWD/web/public/arcs docker stack deploy -c docker-stack.yml arc
-#      (single node: `docker swarm init` first). Open http://<host>:8080/?arc=HeavyDroneMissile
-#   Without swarm:   ARCS_DIR=$PWD/web/public/arcs docker compose -f docker-stack.yml up -d
-version: "3.8"
+# ARC damage visualiser - paste into Portainer (Stacks > Add stack > Web editor). No image build needed.
+# Host layout (create with scripts/package-for-host.sh, then copy to the home server):
+#   /opt/docker/arc-damage/app    built web app (contents of web/dist, without arcs)
+#   /opt/docker/arc-damage/arcs   game-derived ARC data (from web/public/arcs) - copied manually, private
+# Then open http://<host>:8080/?arc=HeavyDroneMissile
 services:
   viewer:
-    image: arc-viewer:latest
+    image: nginx:alpine
     ports:
       - "8080:80"
     volumes:
-      - type: bind
-        source: ${ARCS_DIR:?set ARCS_DIR to the absolute path of web/public/arcs}
-        target: /usr/share/nginx/html/arcs
-        read_only: true
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+      - /opt/docker/arc-damage/app:/usr/share/nginx/html:ro
+      - /opt/docker/arc-damage/arcs:/data/arcs:ro
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        cat > /etc/nginx/conf.d/default.conf <<'CONF'
+        server {
+          listen 80;
+          root /usr/share/nginx/html;
+          index index.html;
+          gzip on;
+          gzip_types application/json model/gltf-binary application/octet-stream;
+          location /arcs/ { alias /data/arcs/; add_header Cache-Control "no-cache"; }
+          location / { try_files $$uri /index.html; }
+        }
+        CONF
+        exec nginx -g 'daemon off;'
+    restart: unless-stopped
