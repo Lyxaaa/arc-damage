@@ -1,0 +1,9 @@
+node_modules/
+dist/
+data/raw/
+web/public/arcs/
+tools/extract/.env
+tools/extract/**/bin/
+tools/extract/**/obj/
+shots/
+*.log
