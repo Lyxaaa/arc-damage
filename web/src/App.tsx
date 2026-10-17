@@ -112,7 +112,7 @@ function Shots({ w, sel, parts }: { w: Weapon; sel: PartInfo; parts: PartInfo[] 
   const n = (v: number | null) => (v === null ? '–' : v)
   return (
     <div style={{ marginTop: 4 }}>
-      <div>{w.id}: {n(r.exposed ?? r.withArmor)} hit(s) to break{r.exposed !== null && r.withArmor !== null ? ` (${n(r.withArmor)} with armour on)` : ''} <span style={{ color: '#8a949d' }}>· estimate</span></div>
+      <div>{w.name ?? w.id}: {n(r.exposed ?? r.withArmor)} hit(s) to break{r.exposed !== null && r.withArmor !== null ? ` (${n(r.withArmor)} with armour on)` : ''} <span style={{ color: '#8a949d' }}>· estimate</span></div>
       {r.armor.length > 0 && <div style={{ color: '#8a949d' }}>plates: {r.armor.map((p) => `${p.bone} ${p.hits}`).join(', ')}</div>}
     </div>
   )
@@ -142,11 +142,11 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
         <div style={{ fontSize: 12, color: '#8a949d' }}>{totals}</div>
         <select value={weapon ?? ''} onChange={(e) => setWeapon(e.target.value || null)}>
           <option value="">Weapon…</option>
-          {weapons.map((x) => <option key={x.id} value={x.id}>{x.id.replace(/_01$/, '').replace(/_/g, ' ')}</option>)}
+          {weapons.map((x) => <option key={x.id} value={x.id}>{x.name ?? x.id}</option>)}
         </select>
         <select value={throwable ?? ''} onChange={(e) => setThrowable(e.target.value || null)}>
           <option value="">Grenade…</option>
-          {throwables.map((x) => <option key={x.id} value={x.id}>{x.id.replace(/_01$/, '').replace(/_/g, ' ')}</option>)}
+          {throwables.map((x) => <option key={x.id} value={x.id}>{x.name ?? x.id}</option>)}
         </select>
         {kp && <div style={{ fontSize: 12 }}>Kill (est.): {kp.total} {w!.id} hit(s) via {kp.bone}{kp.plateHits ? ` (${kp.plateHits} on plates)` : ''}</div>}
         {gk && <div style={{ fontSize: 12 }}>Kill (est.): {gk.count} {g!.id} via {gk.bone}</div>}

@@ -1,6 +1,7 @@
 [
  {
   "id": "AssaultRifle_Bullpup_01",
+  "name": "Tempest",
   "ammo": "MediumAmmo",
   "damage": 10,
   "projectilesPerShot": 1,
@@ -23,6 +24,7 @@
  },
  {
   "id": "AssaultRifle_Burst_01",
+  "name": "Arpeggio",
   "ammo": "MediumAmmo",
   "damage": 9.5,
   "projectilesPerShot": 1,
@@ -47,6 +49,7 @@
  },
  {
   "id": "AssaultRifle_Heavy_01",
+  "name": "Bettina",
   "ammo": "HeavyAmmo",
   "damage": 16,
   "projectilesPerShot": 1,
@@ -69,6 +72,7 @@
  },
  {
   "id": "AssaultRifle_LowTier_01",
+  "name": "Rattler",
   "ammo": "MediumAmmo",
   "damage": 9,
   "projectilesPerShot": 1,
@@ -93,6 +97,7 @@
  },
  {
   "id": "AssaultRifle_Pneumatic_01",
+  "name": "Kettle",
   "ammo": "LightAmmo",
   "damage": 8.5,
   "projectilesPerShot": 1,
@@ -115,6 +120,7 @@
  },
  {
   "id": "BattleRifle_BreachAction_01",
+  "name": "Ferro",
   "type": "BattleRifle",
   "ammo": "HeavyAmmo",
   "damage": 40,
@@ -137,6 +143,7 @@
  },
  {
   "id": "BattleRifle_EnergyBurst_01",
+  "name": "Aphelion",
   "type": "BattleRifle",
   "ammo": "EnergyAmmo",
   "damage": 25,
@@ -159,6 +166,7 @@
  },
  {
   "id": "BattleRifle_LeverAction_01",
+  "name": "Renegade",
   "type": "BattleRifle",
   "ammo": "MediumAmmo",
   "damage": 35,
@@ -180,6 +188,7 @@
  },
  {
   "id": "BattleRifle_SemiAuto_Light_01",
+  "name": "Stiletto",
   "type": "BattleRifle",
   "ammo": "LightAmmo",
   "damage": 19,
@@ -202,6 +211,7 @@
  },
  {
   "id": "HandCannon_DoubleAction_Snubnose_01",
+  "name": "Bantam",
   "type": "HandCannon",
   "ammo": "HeavyAmmo",
   "damage": 24,
@@ -222,6 +232,7 @@
  },
  {
   "id": "HandCannon_SingleAction_01",
+  "name": "Anvil",
   "type": "HandCannon",
   "ammo": "HeavyAmmo",
   "damage": 40,
@@ -244,6 +255,7 @@
  },
  {
   "id": "LMG_Medium_01",
+  "name": "Torrente",
   "type": "LMG",
   "ammo": "MediumAmmo",
   "damage": 8,
@@ -269,6 +281,7 @@
  },
  {
   "id": "Pistol_01",
+  "name": "Burletta",
   "type": "Pistol",
   "ammo": "LightAmmo",
   "damage": 10,
@@ -291,6 +304,7 @@
  },
  {
   "id": "Pistol_HighPower_01",
+  "name": "Venator",
   "type": "Pistol",
   "ammo": "MediumAmmo",
   "damage": 8,
@@ -316,6 +330,7 @@
  },
  {
   "id": "Pistol_Silenced_01",
+  "name": "Hairpin",
   "type": "Pistol",
   "ammo": "LightAmmo",
   "damage": 20,
@@ -339,6 +354,7 @@
  },
  {
   "id": "SMG_01",
+  "name": "Bobcat",
   "type": "SMG",
   "ammo": "LightAmmo",
   "damage": 6,
@@ -362,6 +378,7 @@
  },
  {
   "id": "SMG_LowTier_01",
+  "name": "Stitcher",
   "type": "SMG",
   "ammo": "LightAmmo",
   "damage": 6.5,
@@ -385,6 +402,7 @@
  },
  {
   "id": "SMG_Medium_01",
+  "name": "Canto",
   "type": "SMG",
   "ammo": "MediumAmmo",
   "damage": 6.5,
@@ -409,6 +427,7 @@
  },
  {
   "id": "Shotgun_Energy_Adjustable_01",
+  "name": "Dolabra",
   "ammo": "EnergyAmmo",
   "damage": 25,
   "projectilesPerShot": 19,
@@ -426,6 +445,7 @@
  },
  {
   "id": "Shotgun_PumpAction_01",
+  "name": "IlToro",
   "type": "Shotgun",
   "ammo": "ShotgunAmmo",
   "damage": 7,
@@ -447,6 +467,7 @@
  },
  {
   "id": "Shotgun_SemiAuto_01",
+  "name": "Vulcano",
   "type": "Shotgun",
   "ammo": "ShotgunAmmo",
   "damage": 5.5,
@@ -468,6 +489,7 @@
  },
  {
   "id": "SniperRifle_BoltAction_Medium_01",
+  "name": "Osprey",
   "type": "Sniper",
   "ammo": "MediumAmmo",
   "damage": 45,
@@ -488,6 +510,7 @@
  },
  {
   "id": "Special_BeamRifle_01",
+  "name": "Equalizer",
   "type": "Special",
   "ammo": "EnergyAmmo",
   "damage": 8,
@@ -508,6 +531,7 @@
  },
  {
   "id": "Special_Railgun_01",
+  "name": "Jupiter",
   "type": "Sniper",
   "ammo": "EnergyAmmo",
   "damage": 60,

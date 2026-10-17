@@ -2,6 +2,7 @@ import type { PartInfo } from './parts'
 
 export interface Weapon {
   id: string
+  name?: string
   ammo: string
   damage: number
   projectilesPerShot: number
