@@ -162,7 +162,7 @@ function Suggestions({ weapons, throwables, parts }: { weapons: Weapon[]; throwa
           ))}
         </tbody>
       </table>
-      <div style={{ color: '#8a949d' }}>Weapon rows are rounds, grenade row is grenades. Minimum = exact kill at 100% accuracy; Ideal = 125% at 70%; Spare = 200% at 70%.</div>
+      <div style={{ color: '#8a949d' }}>Weapon rows are rounds, grenade row is grenades. Shotgun pellets are assumed to land at 50% (unmeasured). Minimum = exact kill at 100% accuracy; Ideal = 125% at 70%; Spare = 200% at 70%.</div>
       <div style={{ marginTop: 4 }}>
         {all ? (
           <>
@@ -224,8 +224,8 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
           </div>
         )}
         {weapons.length > 0 && <Suggestions weapons={weapons} throwables={throwables} parts={parts} />}
-        {kp && <div style={{ fontSize: 12 }}>Kill (est.): {kp.total} {w!.id} hit(s) via {kp.bone}{kp.plateHits ? ` (${kp.plateHits} on plates)` : ''}</div>}
-        {gk && <div style={{ fontSize: 12 }}>Kill (est.): {gk.count} {g!.id} via {gk.bone}</div>}
+        {kp && <div style={{ fontSize: 12 }}>Kill (est.): {kp.total} {w!.name ?? w!.id} hit(s) via {kp.bone}{kp.plateHits ? ` (${kp.plateHits} on plates)` : ''}</div>}
+        {gk && <div style={{ fontSize: 12 }}>Kill (est.): {gk.count} {g!.name ?? g!.id} via {gk.bone}</div>}
         <button onClick={reset} style={{ alignSelf: 'flex-start' }}>Reset</button>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 11, color: '#8a949d' }}>
           {legend.map(([k, c]) => <span key={k}><span style={{ display: 'inline-block', width: 8, height: 8, background: c, marginRight: 3 }} />{k}</span>)}
@@ -237,7 +237,7 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
           <b>{sel.bone}</b> · {sel.layer}{sel.armor ? ` (${sel.armor})` : ''} · {sel.resist}
           <div>HP {sel.hp ?? 'untracked'}{sel.hpQuery ? <span style={{ color: '#8a949d' }}> · from “{sel.hpQuery.replace(/Part\.Decorator\./g, '')}” · game data</span> : null}</div>
           {w && <Shots w={w} sel={sel} parts={parts} />}
-          {g && <div>{g.id}: {grenadesToBreak(g, sel) ?? '–'} to break <span style={{ color: '#8a949d' }}>· estimate</span></div>}
+          {g && <div>{g.name ?? g.id}: {grenadesToBreak(g, sel) ?? '–'} to break <span style={{ color: '#8a949d' }}>· estimate</span></div>}
           {sel.attacks?.map((x, i) => <div key={i}>Attack: {x.damage} {x.type}</div>)}
           <div style={{ color: '#8a949d' }}>{sel.tags.map((t) => t.replace('Part.Decorator.', '')).join(', ') || 'no tags'}</div>
         </div>

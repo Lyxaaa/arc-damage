@@ -1,4 +1,4 @@
-import { grenadeKill, killPath, type Throwable, type Weapon } from './damage'
+import { grenadeKill, hitsPerShot, killPath, type Throwable, type Weapon } from './damage'
 import type { PartInfo } from './parts'
 
 export interface Tier {
@@ -31,7 +31,7 @@ export function suggestForArc(weapons: Weapon[], throwables: Throwable[], parts:
   const ws: Suggestion[] = []
   for (const w of weapons) {
     const kp = killPath(w, parts)
-    if (kp) ws.push({ kind: 'weapon', id: w.id, name: w.name ?? w.id, counts: tierCounts(kp.total, w.projectilesPerShot) })
+    if (kp) ws.push({ kind: 'weapon', id: w.id, name: w.name ?? w.id, counts: tierCounts(kp.total, hitsPerShot(w)) })
   }
   ws.sort((a, b) => a.counts[1] - b.counts[1])
   const gs: Suggestion[] = []
@@ -59,7 +59,7 @@ export function catchAll(weapons: Weapon[], all: PartInfo[][]): CatchAll[] {
     const rounds: number[] = []
     for (const parts of all) {
       const kp = killPath(w, parts)
-      if (kp) rounds.push(tierCounts(kp.total, w.projectilesPerShot)[1])
+      if (kp) rounds.push(tierCounts(kp.total, hitsPerShot(w))[1])
     }
     if (rounds.length < all.length * 0.8) continue
     rounds.sort((a, b) => a - b)

@@ -102,3 +102,13 @@ export function grenadeKill(t: Throwable, parts: PartInfo[]): { bone: string; co
   }
   return best
 }
+
+/**
+ * Assumed share of a multi-pellet weapon's pellets that land on the target. Pellet spread is not read from
+ * the game data, so this is a placeholder to be settled by calibration, not a measured value.
+ */
+export const PELLET_HIT_FRACTION = 0.5
+
+/** Effective hits delivered per trigger pull. Single-projectile weapons are unaffected. */
+export const hitsPerShot = (w: Pick<Weapon, 'projectilesPerShot'>) =>
+  w.projectilesPerShot > 1 ? w.projectilesPerShot * PELLET_HIT_FRACTION : 1

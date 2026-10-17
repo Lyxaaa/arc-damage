@@ -1,4 +1,4 @@
-import { grenadeKill, killPath, type Throwable, type Weapon } from './damage'
+import { grenadeKill, hitsPerShot, killPath, type Throwable, type Weapon } from './damage'
 import type { PartInfo } from './parts'
 
 export interface Loadout {
@@ -31,7 +31,7 @@ export function evaluate(l: Loadout, parts: PartInfo[]): LoadoutResult | null {
   const kp = l.weapon ? killPath(l.weapon, parts) : null
   const gk = l.throwable ? grenadeKill(l.throwable, parts) : null
   if (!kp && !gk) return null
-  const projectiles = l.rounds * (l.weapon?.projectilesPerShot ?? 1)
+  const projectiles = l.rounds * (l.weapon ? hitsPerShot(l.weapon) : 1)
   const weaponKills = kp && kp.total > 0 ? (projectiles * l.accuracy) / kp.total : 0
   const grenadeKills = gk && gk.count > 0 ? (l.grenades * l.accuracy) / gk.count : 0
   const coverage = weaponKills + grenadeKills

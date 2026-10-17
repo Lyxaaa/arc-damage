@@ -1,6 +1,7 @@
 [
  {
   "id": "JumpMine_Explosive",
+  "name": "Jump Mine",
   "effect": "GE_Init_JumpMine_Explosive_Damage",
   "damage": {
    "ExplosiveDamage": 40
@@ -9,6 +10,7 @@
  },
  {
   "id": "TimedMine_Explosive",
+  "name": "Timed Mine",
   "effect": "GE_Init_TimedMine_Explosive",
   "damage": {
    "ExplosiveDamage": 1000
@@ -17,6 +19,7 @@
  },
  {
   "id": "CometPart_01",
+  "name": "Comet Part",
   "effect": "GE_Init_CometPart",
   "damage": {
    "ExplosiveDamage": 60
@@ -27,6 +30,7 @@
  },
  {
   "id": "FireflyPart_01",
+  "name": "Firefly Part",
   "effect": "GE_Init_Salvage_FireflyPart",
   "damage": {
    "ExplosiveDamage": 30
@@ -35,6 +39,7 @@
  },
  {
   "id": "HomingMissileGrenade_01",
+  "name": "Homing Missile Grenade",
   "effect": "GE_Init_HomingMissileGrenade",
   "damage": {
    "ExplosiveDamage": 50
@@ -45,6 +50,7 @@
  },
  {
   "id": "ImpactGrenade_Small",
+  "name": "Impact Grenade Small",
   "effect": "GE_Init_ImpactGrenade_Small_Damage",
   "damage": {
    "ExplosiveDamage": 30
@@ -53,6 +59,7 @@
  },
  {
   "id": "ScatterMissileGrenade",
+  "name": "Scatter Missile Grenade",
   "effect": "GE_Init_ScatterMissileGrenade",
   "damage": {
    "ExplosiveDamage": 50
@@ -61,6 +68,7 @@
  },
  {
   "id": "BasicStickyGrenade",
+  "name": "Snap Blast Grenade",
   "effect": "GE_BasicStickyGrenade_Init_Damage",
   "damage": {
    "ExplosiveDamage": 70
@@ -69,6 +77,7 @@
  },
  {
   "id": "HEGrenade",
+  "name": "Heavy Fuze Grenade",
   "effect": "GE_HEGrenade_Init_Damage",
   "damage": {
    "ExplosiveDamage": 80
@@ -77,6 +86,7 @@
  },
  {
   "id": "StickyRemoteGrenade",
+  "name": "Trigger Nade",
   "effect": "GE_StickyRemoteGrenade_Init_Damage",
   "damage": {
    "ExplosiveDamage": 90
