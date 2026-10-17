@@ -51,6 +51,17 @@ switch (args.ElementAtOrDefault(0))
             Console.WriteLine(o);
         }
         break;
+    case "jsonre":
+        // jsonre <outDir> <regex>: dump every .uasset whose path matches, keeping the path under outDir
+        var re = new System.Text.RegularExpressions.Regex(args[2], System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        foreach (var k in provider.Files.Keys.Where(k => k.EndsWith(".uasset") && re.IsMatch(k)).Order())
+        {
+            var o = Path.Combine(args[1], k.Replace("PioneerGame/Content/Pioneer/", "")[..^7] + ".json");
+            Directory.CreateDirectory(Path.GetDirectoryName(o)!);
+            try { File.WriteAllText(o, JsonConvert.SerializeObject(provider.LoadPackage(k).GetExports(), Formatting.Indented)); }
+            catch (Exception e) { Console.Error.WriteLine($"FAIL {k}: {e.Message}"); }
+        }
+        break;
     case "glb":
         foreach (var p in args.Skip(2)) Console.WriteLine(await ExportGlb(p, args[1]));
         break;

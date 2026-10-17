@@ -4,6 +4,8 @@ interface ViewState {
   hidden: Set<string>
   selected: string | null
   ghost: boolean
+  weapon: string | null
+  setWeapon: (id: string | null) => void
   strip: boolean
   select: (b: string | null) => void
   toggle: (b: string) => void
@@ -16,6 +18,8 @@ export const useView = create<ViewState>((set) => ({
   hidden: new Set(),
   selected: null,
   ghost: false,
+  weapon: new URLSearchParams(location.search).get('weapon'),
+  setWeapon: (weapon) => set({ weapon }),
   strip: false,
   select: (selected) => set({ selected }),
   toggle: (b) =>

@@ -1,0 +1,529 @@
+[
+ {
+  "id": "AssaultRifle_Bullpup_01",
+  "ammo": "MediumAmmo",
+  "damage": 10,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1.5,
+  "weakSpotMult": 1,
+  "armorMult": 0.8,
+  "propagationMult": 1,
+  "fireRate": 550,
+  "magazine": 25,
+  "reload": 2.75,
+  "falloffCurve": "Curve_DamageFalloff_AssaultRifle_Bullpup_01",
+  "chain": [
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "AssaultRifle_Burst_01",
+  "ammo": "MediumAmmo",
+  "damage": 9.5,
+  "projectilesPerShot": 1,
+  "burstSize": 3,
+  "critMult": 2,
+  "weakSpotMult": 1,
+  "armorMult": 1,
+  "propagationMult": 1,
+  "fireRate": 1100,
+  "magazine": 24,
+  "reload": 3,
+  "falloffCurve": "Curve_DamageFalloff_AssaultRifle_Burst_01",
+  "chain": [
+   "BP_Item_AssaultRifle_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AiArmorDamageMultiplier",
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "AssaultRifle_Heavy_01",
+  "ammo": "HeavyAmmo",
+  "damage": 16,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2,
+  "weakSpotMult": 1,
+  "armorMult": 2,
+  "propagationMult": 1,
+  "fireRate": 285,
+  "magazine": 22,
+  "reload": 4,
+  "falloffCurve": "Curve_DamageFalloff_AssaultRifle_Heavy_01",
+  "chain": [
+   "BP_Item_AssaultRifle_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "AssaultRifle_LowTier_01",
+  "ammo": "MediumAmmo",
+  "damage": 9,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2,
+  "weakSpotMult": 1,
+  "armorMult": 1,
+  "propagationMult": 1,
+  "fireRate": 500,
+  "magazine": 16,
+  "reload": 3,
+  "falloffCurve": "Curve_DamageFalloff_AssaultRifle_LowTier_01",
+  "chain": [
+   "BP_Item_AssaultRifle_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AiArmorDamageMultiplier",
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "AssaultRifle_Pneumatic_01",
+  "ammo": "LightAmmo",
+  "damage": 8.5,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2.5,
+  "weakSpotMult": 1,
+  "armorMult": 0.2,
+  "propagationMult": 0.1,
+  "fireRate": 450,
+  "magazine": 20,
+  "reload": 4.5,
+  "falloffCurve": "Curve_DamageFalloff_AssaultRifle_Pneumatic_01",
+  "chain": [
+   "BP_Item_AssaultRifle_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "BattleRifle_BreachAction_01",
+  "type": "BattleRifle",
+  "ammo": "HeavyAmmo",
+  "damage": 40,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2.5,
+  "weakSpotMult": 1,
+  "armorMult": 1.5,
+  "propagationMult": 1,
+  "fireRate": 50,
+  "magazine": 1,
+  "reload": 2.5,
+  "falloffCurve": "Curve_DamageFalloff_BattleRifle_BreachAction_01",
+  "chain": [
+   "BP_Item_BattleRifle_Base"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "BattleRifle_EnergyBurst_01",
+  "type": "BattleRifle",
+  "ammo": "EnergyAmmo",
+  "damage": 25,
+  "projectilesPerShot": 1,
+  "burstSize": 2,
+  "critMult": 2,
+  "weakSpotMult": 1,
+  "armorMult": 2.5,
+  "propagationMult": 1,
+  "fireRate": 700,
+  "magazine": 10,
+  "reload": 3.5,
+  "falloffCurve": "Curve_DamageFalloff_BattleRifle_EnergyBurst_01",
+  "chain": [
+   "BP_Item_BattleRifle_Base"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "BattleRifle_LeverAction_01",
+  "type": "BattleRifle",
+  "ammo": "MediumAmmo",
+  "damage": 35,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2.25,
+  "weakSpotMult": 1,
+  "armorMult": 0.8,
+  "propagationMult": 1,
+  "fireRate": 60,
+  "magazine": 8,
+  "reload": 3.5,
+  "falloffCurve": "Curve_DamageFalloff_BattleRifle_LeverAction_01",
+  "chain": [],
+  "assumedDefaults": [
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "BattleRifle_SemiAuto_Light_01",
+  "type": "BattleRifle",
+  "ammo": "LightAmmo",
+  "damage": 19,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1.8,
+  "weakSpotMult": 1,
+  "armorMult": 0.4,
+  "propagationMult": 0.2,
+  "fireRate": 190,
+  "magazine": 12,
+  "reload": 2.8,
+  "falloffCurve": "Curve_DamageFalloff_BattleRifle_SemiAuto_Light_01",
+  "chain": [
+   "BP_Item_BattleRifle_Base"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "HandCannon_DoubleAction_Snubnose_01",
+  "type": "HandCannon",
+  "ammo": "HeavyAmmo",
+  "damage": 24,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1.5,
+  "weakSpotMult": 1,
+  "armorMult": 1.5,
+  "propagationMult": 1,
+  "fireRate": 300,
+  "magazine": 8,
+  "reload": 2.9,
+  "falloffCurve": "Curve_DamageFalloff_HandCannon_DoubleAction_Snubnose_01",
+  "chain": [],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "HandCannon_SingleAction_01",
+  "type": "HandCannon",
+  "ammo": "HeavyAmmo",
+  "damage": 40,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2.5,
+  "weakSpotMult": 1,
+  "armorMult": 1.5,
+  "propagationMult": 1,
+  "fireRate": 50,
+  "magazine": 6,
+  "reload": 2.5,
+  "falloffCurve": "Curve_DamageFalloff_HandCannon_SingleAction_01",
+  "chain": [
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "LMG_Medium_01",
+  "type": "LMG",
+  "ammo": "MediumAmmo",
+  "damage": 8,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2,
+  "weakSpotMult": 1,
+  "armorMult": 1,
+  "propagationMult": 1,
+  "fireRate": 800,
+  "magazine": 70,
+  "reload": 7,
+  "falloffCurve": "Curve_DamageFalloff_LMG_Medium_01",
+  "chain": [
+   "BP_Item_LMG_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AiArmorDamageMultiplier",
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "Pistol_01",
+  "type": "Pistol",
+  "ammo": "LightAmmo",
+  "damage": 10,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2.5,
+  "weakSpotMult": 1,
+  "armorMult": 0.2,
+  "propagationMult": 0.1,
+  "fireRate": 500,
+  "magazine": 12,
+  "reload": 2.5,
+  "falloffCurve": "Curve_DamageFalloff_Pistol_01",
+  "chain": [
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "Pistol_HighPower_01",
+  "type": "Pistol",
+  "ammo": "MediumAmmo",
+  "damage": 8,
+  "projectilesPerShot": 2,
+  "burstSize": 1,
+  "critMult": 1,
+  "weakSpotMult": 1,
+  "armorMult": 0.8,
+  "propagationMult": 1,
+  "fireRate": 255,
+  "magazine": 10,
+  "reload": 3,
+  "falloffCurve": "Curve_DamageFalloff_Pistol_HighPower_01",
+  "chain": [
+   "BP_Item_Pistol_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AiArmorPropagationMultiplier",
+   "CriticalDamageMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "Pistol_Silenced_01",
+  "type": "Pistol",
+  "ammo": "LightAmmo",
+  "damage": 20,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2.5,
+  "weakSpotMult": 1,
+  "armorMult": 0.2,
+  "propagationMult": 0.1,
+  "fireRate": 60,
+  "magazine": 8,
+  "reload": 2.5,
+  "falloffCurve": "Curve_DamageFalloff_Pistol_Silenced_01",
+  "chain": [
+   "BP_Item_Pistol_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "SMG_01",
+  "type": "SMG",
+  "ammo": "LightAmmo",
+  "damage": 6,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1,
+  "weakSpotMult": 1,
+  "armorMult": 0.2,
+  "propagationMult": 0.1,
+  "fireRate": 1000,
+  "magazine": 20,
+  "reload": 3,
+  "falloffCurve": "Curve_DamageFalloff_SMG_01",
+  "chain": [
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "CriticalDamageMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "SMG_LowTier_01",
+  "type": "SMG",
+  "ammo": "LightAmmo",
+  "damage": 6.5,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1.75,
+  "weakSpotMult": 1,
+  "armorMult": 0.2,
+  "propagationMult": 0.1,
+  "fireRate": 680,
+  "magazine": 20,
+  "reload": 2.5,
+  "falloffCurve": "Curve_DamageFalloff_SMG_LowTier_01",
+  "chain": [
+   "BP_Item_SMG_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "SMG_Medium_01",
+  "type": "SMG",
+  "ammo": "MediumAmmo",
+  "damage": 6.5,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1.75,
+  "weakSpotMult": 1,
+  "armorMult": 0.8,
+  "propagationMult": 1,
+  "fireRate": 850,
+  "magazine": 20,
+  "reload": 3.5,
+  "falloffCurve": "Curve_DamageFalloff_SMG_Medium_01",
+  "chain": [
+   "BP_Item_SMG_Base",
+   "BP_WeaponItem_RifleBase"
+  ],
+  "assumedDefaults": [
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "Shotgun_Energy_Adjustable_01",
+  "ammo": "EnergyAmmo",
+  "damage": 25,
+  "projectilesPerShot": 19,
+  "burstSize": 1,
+  "critMult": 1,
+  "weakSpotMult": 1.5,
+  "armorMult": 1.5,
+  "propagationMult": 1.5,
+  "fireRate": 55,
+  "magazine": 8,
+  "reload": 3.25,
+  "falloffCurve": "Curve_DamageFalloff_Shotgun_Energy_Adjustable_01",
+  "chain": [],
+  "assumedDefaults": []
+ },
+ {
+  "id": "Shotgun_PumpAction_01",
+  "type": "Shotgun",
+  "ammo": "ShotgunAmmo",
+  "damage": 7,
+  "projectilesPerShot": 9,
+  "burstSize": 1,
+  "critMult": 1,
+  "weakSpotMult": 1,
+  "armorMult": 0.5,
+  "propagationMult": 1,
+  "fireRate": 45,
+  "magazine": 6,
+  "reload": 2.5,
+  "falloffCurve": "Curve_DamageFalloff_Shotgun_PumpAction_01",
+  "chain": [],
+  "assumedDefaults": [
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "Shotgun_SemiAuto_01",
+  "type": "Shotgun",
+  "ammo": "ShotgunAmmo",
+  "damage": 5.5,
+  "projectilesPerShot": 9,
+  "burstSize": 1,
+  "critMult": 1,
+  "weakSpotMult": 1,
+  "armorMult": 0.5,
+  "propagationMult": 1,
+  "fireRate": 140,
+  "magazine": 6,
+  "reload": 3,
+  "falloffCurve": "Curve_DamageFalloff_Shotgun_SemiAuto_01",
+  "chain": [],
+  "assumedDefaults": [
+   "AiArmorPropagationMultiplier",
+   "AIWeakSpotDamageMultiplier"
+  ]
+ },
+ {
+  "id": "SniperRifle_BoltAction_Medium_01",
+  "type": "Sniper",
+  "ammo": "MediumAmmo",
+  "damage": 45,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 2,
+  "weakSpotMult": 1,
+  "armorMult": 0.8,
+  "propagationMult": 0.4,
+  "fireRate": 45,
+  "magazine": 8,
+  "reload": 3.5,
+  "falloffCurve": "Curve_DamageFalloff_SniperRifle_BoltAction_Medium_01",
+  "chain": [
+   "BP_Item_SniperRifle_Base"
+  ],
+  "assumedDefaults": []
+ },
+ {
+  "id": "Special_BeamRifle_01",
+  "type": "Special",
+  "ammo": "EnergyAmmo",
+  "damage": 8,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1,
+  "weakSpotMult": 1.5,
+  "armorMult": 2.5,
+  "propagationMult": 1,
+  "fireRate": 500,
+  "magazine": 50,
+  "reload": 3,
+  "falloffCurve": "Curve_DamageFalloff_Special_BeamRifle_01",
+  "chain": [],
+  "assumedDefaults": [
+   "CriticalDamageMultiplier"
+  ]
+ },
+ {
+  "id": "Special_Railgun_01",
+  "type": "Sniper",
+  "ammo": "EnergyAmmo",
+  "damage": 60,
+  "projectilesPerShot": 1,
+  "burstSize": 1,
+  "critMult": 1,
+  "weakSpotMult": 1.3,
+  "armorMult": 3,
+  "propagationMult": 1,
+  "fireRate": 45,
+  "reload": 3,
+  "falloffCurve": "Curve_DamageFalloff_Special_Railgun_01",
+  "chain": [],
+  "assumedDefaults": [
+   "AiArmorPropagationMultiplier",
+   "CriticalDamageMultiplier"
+  ]
+ }
+]

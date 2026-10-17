@@ -1,0 +1,86 @@
+[
+ {
+  "id": "JumpMine_Explosive",
+  "effect": "GE_Init_JumpMine_Explosive_Damage",
+  "damage": {
+   "ExplosiveDamage": 40
+  },
+  "radiiCm": []
+ },
+ {
+  "id": "TimedMine_Explosive",
+  "effect": "GE_Init_TimedMine_Explosive",
+  "damage": {
+   "ExplosiveDamage": 1000
+  },
+  "radiiCm": []
+ },
+ {
+  "id": "CometPart_01",
+  "effect": "GE_Init_CometPart",
+  "damage": {
+   "ExplosiveDamage": 60
+  },
+  "radiiCm": [
+   600
+  ]
+ },
+ {
+  "id": "FireflyPart_01",
+  "effect": "GE_Init_Salvage_FireflyPart",
+  "damage": {
+   "ExplosiveDamage": 30
+  },
+  "radiiCm": []
+ },
+ {
+  "id": "HomingMissileGrenade_01",
+  "effect": "GE_Init_HomingMissileGrenade",
+  "damage": {
+   "ExplosiveDamage": 50
+  },
+  "radiiCm": [
+   600
+  ]
+ },
+ {
+  "id": "ImpactGrenade_Small",
+  "effect": "GE_Init_ImpactGrenade_Small_Damage",
+  "damage": {
+   "ExplosiveDamage": 30
+  },
+  "radiiCm": []
+ },
+ {
+  "id": "ScatterMissileGrenade",
+  "effect": "GE_Init_ScatterMissileGrenade",
+  "damage": {
+   "ExplosiveDamage": 50
+  },
+  "radiiCm": []
+ },
+ {
+  "id": "BasicStickyGrenade",
+  "effect": "GE_BasicStickyGrenade_Init_Damage",
+  "damage": {
+   "ExplosiveDamage": 70
+  },
+  "radiiCm": []
+ },
+ {
+  "id": "HEGrenade",
+  "effect": "GE_HEGrenade_Init_Damage",
+  "damage": {
+   "ExplosiveDamage": 80
+  },
+  "radiiCm": []
+ },
+ {
+  "id": "StickyRemoteGrenade",
+  "effect": "GE_StickyRemoteGrenade_Init_Damage",
+  "damage": {
+   "ExplosiveDamage": 90
+  },
+  "radiiCm": []
+ }
+]
