@@ -5,6 +5,7 @@ import * as THREE from 'three'
 import { LAYER_COLOR, buildTree, splitByBone, type Layer, type PartInfo, type TreeNode } from './parts'
 import { useView } from './store'
 import { evaluate } from './loadout'
+import { loadoutCost, type Costs } from './costs'
 import { TIERS, catchAll, suggestForArc, type CatchAll } from './suggest'
 import { grenadeKill, grenadesToBreak, killPath, shotsToBreak, type Throwable, type Weapon } from './damage'
 
@@ -181,7 +182,9 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
   const { strip, ghost, setStrip, setGhost, reset, selected, weapon, setWeapon, throwable, setThrowable, rounds, grenades, accuracy, setLoadout } = useView()
   const [weapons, setWeapons] = useState<Weapon[]>([])
   const [throwables, setThrowables] = useState<Throwable[]>([])
+  const [costs, setCosts] = useState<Costs | null>(null)
   useEffect(() => {
+    fetch('/data/costs.json').then((r) => r.json()).then(setCosts).catch(() => {})
     fetch('/data/weapons.json').then((r) => r.json()).then(setWeapons).catch(() => {})
     fetch('/data/throwables.json').then((r) => r.json()).then(setThrowables).catch(() => {})
   }, [])
@@ -190,6 +193,7 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
   const kp = w ? killPath(w, parts) : null
   const gk = g ? grenadeKill(g, parts) : null
   const res = w || g ? evaluate({ weapon: w ?? null, rounds, throwable: g ?? null, grenades, accuracy }, parts) : null
+  const cost = costs && (w || g) ? loadoutCost(costs, { weapon: w, rounds, throwable: g, grenades }) : null
   const verdictColor = { Short: '#e5534b', Close: '#d4a72c', Comfortable: '#57ab5a', Decimating: '#39c5cf' }
   const sel = parts.find((p) => p.bone === selected)
   const legend = Object.entries(LAYER_COLOR)
@@ -222,6 +226,19 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
             {res.weaponKills > 0 && res.grenadeKills > 0 ? ` (weapon ${(res.weaponKills * 100).toFixed(0)}%, grenades ${(res.grenadeKills * 100).toFixed(0)}%)` : ''}
             <span style={{ color: '#8a949d' }}> · estimate</span>
           </div>
+        )}
+        {cost && cost.lines.length > 0 && (
+          <details style={{ fontSize: 12 }}>
+            <summary style={{ cursor: 'pointer' }}>Cost ~{cost.value.toLocaleString()} coins <span style={{ color: '#8a949d' }}>· item value, community data</span></summary>
+            {cost.lines.map((c) => (
+              <div key={c.label}>
+                {c.qty}× {c.label} @ {c.each}
+                <span style={{ color: '#8a949d' }}>{c.recipe ? ` · craft: ${Object.entries(c.recipe).map(([k, v]) => `${v} ${k.replace(/_/g, ' ')}`).join(', ')}${c.bench ? ` @ ${c.bench.replace(/_/g, ' ')}` : ''}` : ''}{c.vendor ? ` · buy: ${c.vendor}` : ''}</span>
+              </div>
+            ))}
+            {cost.unknown.length > 0 && <div style={{ color: '#8a949d' }}>no price data: {cost.unknown.join(', ')}</div>}
+            <div style={{ color: '#8a949d' }}>Value is the item's base value, not a trader price. Ammo recipes are per craft batch.</div>
+          </details>
         )}
         {weapons.length > 0 && <Suggestions weapons={weapons} throwables={throwables} parts={parts} />}
         {kp && <div style={{ fontSize: 12 }}>Kill (est.): {kp.total} {w!.name ?? w!.id} hit(s) via {kp.bone}{kp.plateHits ? ` (${kp.plateHits} on plates)` : ''}</div>}
