@@ -1,5 +1,6 @@
 // Copies extracted glbs from data/raw/arcs into web/public/arcs and writes index.json (code, name, meshes) and parts.json.
 import { buildParts } from './parts-lib.mjs'
+import { loadBalancing, resolveHp, damageOf } from './hp-lib.mjs'
 import { cpSync, mkdirSync, readdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs'
 
 const src = 'data/raw/arcs'
@@ -13,6 +14,9 @@ for (const code of readdirSync(src)) {
   mkdirSync(`${dst}/${code}`)
   for (const m of meshes) cpSync(`${src}/${code}/${m}`, `${dst}/${code}/${m}`)
   const bp = buildParts(`${src}/${code}`)
+  const bal = loadBalancing(`${src}/${code}`)
+  for (const p of bp.parts) Object.assign(p, resolveHp(bal, p.tags) ?? {}, { attacks: damageOf(bal, p.tags) })
+  bp.balancing = bal ? 'game' : 'none'
   writeFileSync(`${dst}/${code}/parts.json`, JSON.stringify(bp))
   index.push({ code, name, meshes })
 }

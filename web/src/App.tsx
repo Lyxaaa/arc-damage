@@ -56,7 +56,7 @@ function Arc({ arc, parts, onTree }: { arc: ArcEntry; parts: PartInfo[]; onTree:
         m.material = hide ? ghostMat : bone === selected ? selectedMat : solid[p?.layer ?? 'component']
         m.raycast = hide ? () => {} : THREE.Mesh.prototype.raycast
       }
-      state.push({ bone, layer: p?.layer, armor: p?.armor, tris: meshes[0].userData.tris, visible: !hide, ghosted: hide && ghost })
+      state.push({ bone, layer: p?.layer, armor: p?.armor, hp: p?.hp, tris: meshes[0].userData.tris, visible: !hide, ghosted: hide && ghost })
     }
     window.__arc = { id: arc.code, name: arc.name, ready: true, selected, strip, ghost, hidden: [...hidden], partCount: state.length, parts: state, errors }
   }, [byBone, info, hidden, selected, ghost, strip, arc])
@@ -92,6 +92,7 @@ function Row({ n, depth }: { n: TreeNode; depth: number }) {
         <span style={{ width: 8, height: 8, flex: 'none', background: LAYER_COLOR[n.part.layer] }} />
         <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={n.part.bone}>{n.part.bone}</span>
         {n.part.armor && <span style={{ color: '#8a949d', fontSize: 11 }}>{n.part.armor}</span>}
+        <span style={{ color: '#cfd6dc', fontSize: 11, minWidth: 34, textAlign: 'right' }}>{n.part.hp ?? '–'}</span>
         <button
           onClick={(e) => { e.stopPropagation(); toggle(n.part.bone) }}
           style={{ all: 'unset', cursor: 'pointer', width: 18, textAlign: 'center' }}
@@ -109,11 +110,14 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
   const { strip, ghost, setStrip, setGhost, reset, selected } = useView()
   const sel = parts.find((p) => p.bone === selected)
   const legend = Object.entries(LAYER_COLOR)
+  const sum = (l: Layer) => parts.filter((p) => p.layer === l).reduce((s, p) => s + (p.hp ?? 0), 0)
+  const totals = `HP pools: armour ${sum('armor')} · weak point ${sum('weakpoint')} · frame ${sum('frame')} · components ${sum('component')} (sum of parts, not kill threshold)`
   return (
     <aside style={{ width: 300, display: 'flex', flexDirection: 'column', borderLeft: '1px solid #262b30' }}>
       <div style={{ padding: 8, display: 'flex', flexDirection: 'column', gap: 4, borderBottom: '1px solid #262b30' }}>
         <label><input type="checkbox" checked={strip} onChange={(e) => setStrip(e.target.checked)} /> Strip armour</label>
         <label><input type="checkbox" checked={ghost} onChange={(e) => setGhost(e.target.checked)} /> Show removed as ghost</label>
+        <div style={{ fontSize: 12, color: '#8a949d' }}>{totals}</div>
         <button onClick={reset} style={{ alignSelf: 'flex-start' }}>Reset</button>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 11, color: '#8a949d' }}>
           {legend.map(([k, c]) => <span key={k}><span style={{ display: 'inline-block', width: 8, height: 8, background: c, marginRight: 3 }} />{k}</span>)}
@@ -123,6 +127,8 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
       {sel && (
         <div style={{ padding: 8, borderTop: '1px solid #262b30', fontSize: 12, wordBreak: 'break-word' }}>
           <b>{sel.bone}</b> · {sel.layer}{sel.armor ? ` (${sel.armor})` : ''} · {sel.resist}
+          <div>HP {sel.hp ?? 'untracked'}{sel.hpQuery ? <span style={{ color: '#8a949d' }}> · from “{sel.hpQuery.replace(/Part\.Decorator\./g, '')}” · game data</span> : null}</div>
+          {sel.attacks?.map((x, i) => <div key={i}>Attack: {x.damage} {x.type}</div>)}
           <div style={{ color: '#8a949d' }}>{sel.tags.map((t) => t.replace('Part.Decorator.', '')).join(', ') || 'no tags'}</div>
         </div>
       )}

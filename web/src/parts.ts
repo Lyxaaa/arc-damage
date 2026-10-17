@@ -9,6 +9,9 @@ export interface PartInfo {
   layer: Layer
   armor?: string
   resist: string
+  hp?: number
+  hpQuery?: string
+  attacks?: { type: string; damage: number }[]
 }
 
 export const LAYER_COLOR: Record<Layer, string> = {
