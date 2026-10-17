@@ -1,0 +1,30 @@
+{
+  "root": "PioneerGame/Content/Pioneer/Enemies/",
+  "arcs": {
+    "HeavyDroneMissile": {"name":"Rocketeer","dir":"HeavyDrone/HeavyDroneMissile","meshes":["Art/SK_HeavyDrone_Missile_01"],"cssc":"Art/SK/CSSC_HeavyDroneMissile","balancing":"DataAssets/DA_Balancing_C_HeavyDrone_Missile","meta":"DataAssets/DA_EnemyMetaData_HeavyDroneMissile"},
+    "HeavyDroneLaser": {"name":"Vaporizer","dir":"HeavyDrone/HeavyDroneLaser","meshes":["Art/SK_HeavyDrone_Laser_01"],"cssc":"DataAssets/CSSC_HeavyDroneLaser","balancing":"DataAssets/DA_Balancing_C_HeavyDrone_Laser","meta":"DataAssets/DA_EnemyMetaData_HeavyDroneLaser"},
+    "Chonk": {"name":"Bastion","dir":"Chonk","meshes":["Art/SK_Chonk_01_A"],"cs":"CS_Chonk","balancing":"DataAssets/DA_Balancing_C_Chonk","meta":"DataAssets/DA_EnemyMetaData_Chonk"},
+    "ChonkMortar": {"name":"Bombardier","dir":"ChonkMortar","meshes":["Art/SK_ChonkMortar_01"],"cs":"ChonkPlatform/CS_ChonkPlatform_Mortar","balancing":"ChonkPlatform/DataAssets/DA_Balancing_C_ChonkPlatform_Mortar","meta":"ChonkPlatform/DataAssets/DA_EnemyMetaData_ChonkMortar"},
+    "Tarragon": {"name":"Bully","dir":"Tarragon","meshes":["Art/SK_Tarragon_01"],"cs":"CS_Tarragon_01","balancing":"DataAssets/DA_Balancing_C_Tarragon_01","meta":"DataAssets/DA_EnemyMetaData_Tarragon"},
+    "BullCrab": {"name":"Leaper","dir":"Bullcrab","meshes":["Art/SK_BullCrab_01"],"cssc":"CSSC_BullCrab_01","balancing":"DA_Balancing_C_BullCrab_01","meta":"DA_EnemyMetaData_BullCrab"},
+    "Monolith": {"name":"ARC Turbine","dir":"Monolith/Monolith","meshes":["Art/SK_Monolith_01_A"],"cssc":"Art/CSSC_Monolith","balancing":"DataAssets/DA_Balancing_C_Monolith","meta":"DataAssets/DA_EnemyMetaData_Monolith"},
+    "Peppermint": {"name":"Queen","dir":"MintType/Peppermint","meshes":["Art/SK_Peppermint_01"],"cssc":"DataAssets/CSSC_Peppermint","balancing":"DataAssets/DA_Balancing_C_Peppermint","meta":"DataAssets/DA_EnemyMetaData_Peppermint"},
+    "Spearmint": {"name":"Matriarch","dir":"MintType/Spearmint","meshes":["Art/SK_Spearmint_01"],"cssc":"DataAssets/CSSC_Spearmint","balancing":"DataAssets/DA_Balancing_C_Spearmint","meta":"DataAssets/DA_EnemyMetaData_Spearmint"},
+    "Kebab_Gatling": {"name":"Hydra","dir":"Kebab/Gatling","meshes":["Art/SK_Kebab_01_Base","Art/SK_KebabGatling_01_B"],"cssc":"Art/CSSC_Kebab_Gatling","balancing":"DataAssets/DA_Balancing_C_Kebab_Gatling","meta":"DataAssets/DA_EnemyMetaData_Kebab_Gatling"},
+    "Runner": {"name":"Shredder","dir":"Runner/Shredder","meshes":["Art/SK_Runner_01"],"cssc":"Art/CSSC_Runner","balancing":"DataAssets/DA_Balancing_C_Runner","meta":"DataAssets/DA_EnemyMetaData_Runner"},
+    "Meerkat": {"name":"Skulker","dir":"Meerkat/Meerkat","meshes":["Art/SK_Meerkat_02_A"],"cssc":"DataAssets/CSSC_Meerkat","balancing":"DataAssets/DA_Balancing_C_Meerkat","meta":"DataAssets/DA_EnemyMetaData_Meerkat"},
+    "Sniper": {"name":"Sentinel","dir":"Sniper","meshes":["Art/SK_Sniper_01_A"],"cssc":"CSSC_Sniper","balancing":"DataAssets/DA_Balancing_C_Sniper","meta":"DataAssets/DA_EnemyMetaData_Sniper"},
+    "Pinger": {"name":"Spotter","dir":"Pinger","meshes":["Art/SK_Pinger_01"],"cssc":"DataAssets/CSSC_Pinger","balancing":"DataAssets/DA_Balancing_C_Pinger","meta":"DataAssets/DA_EnemyMetaData_Pinger"},
+    "Rose": {"name":"Frigate Cannon","dir":"Turret/Rose","meshes":["Art/SK_Rose_01_A"],"cssc":"Art/CSSC_Rose","balancing":"DataAssets/DA_Balancing_C_Rose","meta":"DataAssets/DA_EnemyMetaData_Rose"},
+    "Courier": {"name":"ARC Reclaimer","dir":"Courier","meshes":["Art/SK_Courier_01_A"],"cssc":"Art/CSSC_Courier","balancing":"DataAssets/DA_Balancing_C_Courier","meta":"DataAssets/DA_EnemyMetaData_Courier"},
+    "RollBot": {"name":"Surveyor","dir":"RollBot/Rollbot_Normal_Version","meshes":["Art/SK_RollBot_01"],"cssc":"DataAssets/CSSC_Rollbot","balancing":"DataAssets/DA_Balancing_C_RollBot_01_Blockout_Normal","meta":"DataAssets/DA_EnemyMetaData_RollBot_Normal"},
+    "Rollbot_Boom": {"name":"Comet","dir":"RollBot/Boom","meshes":["Art/SK_Boom_01_B"],"cssc":"Art/CSSC_Boom_01_B","balancing":"DataAssets/DA_Balancing_C_Rollbot_Boom","meta":"DataAssets/DA_EnemyMetaData_Rollbot_Boom"},
+    "EliteDrone_Flamethrower": {"name":"Firefly","dir":"EliteDrone/Flamethrower","meshes":["Art/SK_EliteDrone_Flamethrower_01_A"],"cssc":"DataAssets/CSSC_EliteDrone_FlameThrower","balancing":"DataAssets/DA_Balancing_C_EliteDrone_Flamethrower","meta":"DataAssets/DA_EnemyMetaData_EliteDrone_Flamethrower"},
+    "LightDroneElite": {"name":"Hornet","dir":"EliteDrone/Hornet","meshes":["Art/SK_LightDroneElite_01_A"],"cssc":"DataAssets/CSSC_LightDroneElite","balancing":"DataAssets/DA_Balancing_C_LightDrone_Elite","meta":"DataAssets/DA_EnemyMetaData_LightDroneElite"},
+    "LightDrone_02": {"name":"Wasp","dir":"LightDrone/Wasp","meshes":["Art/SK_LightDrone_01_A"],"cssc":"CSSC_LightDrone_02_SK","balancing":"DA_Balancing_C_LightDrone_02","meta":"DA_EnemyMetaData_LightDrone_02"},
+    "Tick": {"name":"Tick","dir":"Tick","meshes":["Shared/Art/SK_Tick_02_A"],"cs":"TickBot/CS_TickBot_01","balancing":"DA_Balancing_C_TickBot","meta":"DA_EnemyMetaData_TickBot"},
+    "RollBot_Pop": {"name":"Pop","dir":"Pop/Pop","meshes":["Art/SK_Pop_01"],"cssc":"DataAssets/CSSC_RollBot_Pop","balancing":"DataAssets/DA_Balancing_C_RollBot_Pop","meta":"DataAssets/DA_EnemyMetaData_RollBot_Pop"},
+    "SnitchBot": {"name":"Snitch","dir":"SnitchBot","meshes":["Shared/Art/SK_ScoutDrone_01_A"],"cssc":"Snitch_02/SnitchBot_Skeleton/CSSC_SnitchBot","balancing":"Snitch_02/DataAssets/DA_Balancing_C_SnitchBot_01","meta":"Snitch_02/DataAssets/DA_EnemyMetaData_SnitchBot"},
+    "RollBot_Flamethrower": {"name":"Fireball","dir":"FireBall","meshes":["Art/SK/SK_FireBall_01"],"cssc":"DataAssets/CSSC_RollBot_Flamethrower","balancing":"DataAssets/DA_Balancing_C_RollBot_Flamethrower","meta":"DataAssets/DA_EnemyMetaData_RollBot_Flamethrower"}
+  }
+}
