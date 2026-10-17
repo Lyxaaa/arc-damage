@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { LAYER_COLOR, buildTree, splitByBone, type Layer, type PartInfo, type TreeNode } from './parts'
 import { useView } from './store'
-import { shotsToBreak, type Weapon } from './damage'
+import { grenadeKill, grenadesToBreak, killPath, shotsToBreak, type Throwable, type Weapon } from './damage'
 
 declare global {
   interface Window {
@@ -119,12 +119,17 @@ function Shots({ w, sel, parts }: { w: Weapon; sel: PartInfo; parts: PartInfo[] 
 }
 
 function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
-  const { strip, ghost, setStrip, setGhost, reset, selected, weapon, setWeapon } = useView()
+  const { strip, ghost, setStrip, setGhost, reset, selected, weapon, setWeapon, throwable, setThrowable } = useView()
   const [weapons, setWeapons] = useState<Weapon[]>([])
+  const [throwables, setThrowables] = useState<Throwable[]>([])
   useEffect(() => {
     fetch('/data/weapons.json').then((r) => r.json()).then(setWeapons).catch(() => {})
+    fetch('/data/throwables.json').then((r) => r.json()).then(setThrowables).catch(() => {})
   }, [])
   const w = weapons.find((x) => x.id === weapon)
+  const g = throwables.find((x) => x.id === throwable)
+  const kp = w ? killPath(w, parts) : null
+  const gk = g ? grenadeKill(g, parts) : null
   const sel = parts.find((p) => p.bone === selected)
   const legend = Object.entries(LAYER_COLOR)
   const sum = (l: Layer) => parts.filter((p) => p.layer === l).reduce((s, p) => s + (p.hp ?? 0), 0)
@@ -139,6 +144,12 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
           <option value="">Weapon…</option>
           {weapons.map((x) => <option key={x.id} value={x.id}>{x.id.replace(/_01$/, '').replace(/_/g, ' ')}</option>)}
         </select>
+        <select value={throwable ?? ''} onChange={(e) => setThrowable(e.target.value || null)}>
+          <option value="">Grenade…</option>
+          {throwables.map((x) => <option key={x.id} value={x.id}>{x.id.replace(/_01$/, '').replace(/_/g, ' ')}</option>)}
+        </select>
+        {kp && <div style={{ fontSize: 12 }}>Kill (est.): {kp.total} {w!.id} hit(s) via {kp.bone}{kp.plateHits ? ` (${kp.plateHits} on plates)` : ''}</div>}
+        {gk && <div style={{ fontSize: 12 }}>Kill (est.): {gk.count} {g!.id} via {gk.bone}</div>}
         <button onClick={reset} style={{ alignSelf: 'flex-start' }}>Reset</button>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 11, color: '#8a949d' }}>
           {legend.map(([k, c]) => <span key={k}><span style={{ display: 'inline-block', width: 8, height: 8, background: c, marginRight: 3 }} />{k}</span>)}
@@ -150,6 +161,7 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
           <b>{sel.bone}</b> · {sel.layer}{sel.armor ? ` (${sel.armor})` : ''} · {sel.resist}
           <div>HP {sel.hp ?? 'untracked'}{sel.hpQuery ? <span style={{ color: '#8a949d' }}> · from “{sel.hpQuery.replace(/Part\.Decorator\./g, '')}” · game data</span> : null}</div>
           {w && <Shots w={w} sel={sel} parts={parts} />}
+          {g && <div>{g.id}: {grenadesToBreak(g, sel) ?? '–'} to break <span style={{ color: '#8a949d' }}>· estimate</span></div>}
           {sel.attacks?.map((x, i) => <div key={i}>Attack: {x.damage} {x.type}</div>)}
           <div style={{ color: '#8a949d' }}>{sel.tags.map((t) => t.replace('Part.Decorator.', '')).join(', ') || 'no tags'}</div>
         </div>

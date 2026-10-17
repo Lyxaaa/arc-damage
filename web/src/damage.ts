@@ -59,3 +59,44 @@ export function grenadesToBreak(t: Throwable, part: PartInfo): number | null {
   const dmg = t.damage.ExplosiveDamage
   return hits(part.hp, dmg === undefined ? 0 : dmg * MODEL.explosiveArmorMult)
 }
+
+export interface KillPath {
+  bone: string
+  layer: string
+  /** Hits to strip covering plates, then break the part itself. */
+  plateHits: number
+  partHits: number
+  total: number
+}
+
+/**
+ * Cheapest estimated way to kill the ARC with one weapon: break a Critical/weak-point part
+ * (tag docs: "if destroyed, instantly destroys the constructable") or deplete the frame.
+ * Weak-point parts use the crit multiplier. Estimate only; see calibration list.
+ */
+export function killPath(w: Weapon, parts: PartInfo[]): KillPath | null {
+  const d = perProjectile(w)
+  let best: KillPath | null = null
+  for (const part of parts) {
+    if ((part.layer !== 'weakpoint' && part.layer !== 'frame') || part.hp === undefined) continue
+    const plates = parts.filter((p) => p.parent === part.bone && p.layer === 'armor')
+    const crit = part.layer === 'weakpoint' ? w.critMult : 1
+    const plateHits = plates.reduce((s, p) => s + (hits(p.hp, d.armor) ?? 0), 0)
+    const partHits = hits(part.hp, (plates.length ? d.behindArmor : d.bare) * crit)
+    if (partHits === null) continue
+    const total = plateHits + partHits
+    if (!best || total < best.total) best = { bone: part.bone, layer: part.layer, plateHits, partHits, total }
+  }
+  return best
+}
+
+/** Grenades to kill via the cheapest weak-point/frame part (armour ignored, see MODEL). */
+export function grenadeKill(t: Throwable, parts: PartInfo[]): { bone: string; count: number } | null {
+  let best: { bone: string; count: number } | null = null
+  for (const part of parts) {
+    if (part.layer !== 'weakpoint' && part.layer !== 'frame') continue
+    const n = grenadesToBreak(t, part)
+    if (n !== null && (!best || n < best.count)) best = { bone: part.bone, count: n }
+  }
+  return best
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { shotsToBreak, type Weapon } from './damage'
+import { grenadeKill, killPath, shotsToBreak, type Weapon } from './damage'
 import type { PartInfo } from './parts'
 
 const anvil: Weapon = { id: 'Anvil', ammo: 'HeavyAmmo', damage: 40, projectilesPerShot: 1, critMult: 2.5, armorMult: 1.5, propagationMult: 1, fireRate: 50, magazine: 6, assumedDefaults: [] }
@@ -19,5 +19,21 @@ describe('shotsToBreak', () => {
   })
   it('returns null for untracked HP', () => {
     expect(shotsToBreak(anvil, p({}), []).exposed).toBeNull()
+  })
+})
+
+describe('killPath', () => {
+  const core = p({ bone: 'Core_01', layer: 'weakpoint', hp: 2600 })
+  const frame = p({ bone: 'Frame', layer: 'frame', hp: 1100 })
+  it('picks the cheapest of weak point (with crit) and frame', () => {
+    const k = killPath(anvil, [core, frame])
+    expect(k).toMatchObject({ bone: 'Core_01', total: 26 }) // 2600 / (40 x 2.5) vs 1100 / 40 = 28
+  })
+  it('adds plate hits for covered parts', () => {
+    const plate = p({ bone: 'A', parent: 'Frame', layer: 'armor', hp: 24 })
+    expect(killPath(anvil, [frame, plate])).toMatchObject({ plateHits: 1, partHits: 28, total: 29 })
+  })
+  it('counts grenades on the cheapest part', () => {
+    expect(grenadeKill({ id: 'HE', damage: { ExplosiveDamage: 80 } }, [core, frame])).toEqual({ bone: 'Frame', count: 14 })
   })
 })
