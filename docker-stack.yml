@@ -2,19 +2,23 @@
 # On start, the container clones the repo from GitHub, builds the web app and serves it with nginx.
 # The only manual step is copying the game-derived ARC data (private, not in git) to the host:
 #   /opt/docker/arc-damage/arcs   <- contents of web/public/arcs (or deploy/arcs from scripts/package-for-host.sh)
-# Then open http://<host>:8080/?arc=HeavyDroneMissile
+#
+# No ports are published. The container joins the external 'lyxaa-cloud' network, where your existing
+# NGINX (mahon.dev) reaches it as http://arc-damage:80. Add a server/location there, e.g.:
+#   server { server_name arc.mahon.dev; location / { proxy_pass http://arc-damage:80; } }
+# (use a variable + resolver if nginx should start even when this container is down)
 #
 # To update the app: restart/recreate the container (it pulls and rebuilds). First start takes a few minutes.
 # Optional stack environment variables:
 #   GIT_REPO    default https://github.com/Lyxaaa/arc-damage.git
 #   GIT_BRANCH  default main
 #   GIT_TOKEN   only needed if the repo is private (GitHub personal access token with read access)
-#   PORT        default 8080
 services:
   viewer:
     image: node:22-alpine
-    ports:
-      - "${PORT:-8080}:80"
+    container_name: arc-damage
+    networks:
+      - lyxaa-cloud
     environment:
       GIT_REPO: ${GIT_REPO:-https://github.com/Lyxaaa/arc-damage.git}
       GIT_BRANCH: ${GIT_BRANCH:-main}
@@ -52,6 +56,10 @@ services:
         CONF
         exec nginx -g 'daemon off;'
     restart: unless-stopped
+
+networks:
+  lyxaa-cloud:
+    external: true
 
 volumes:
   npm-cache:
