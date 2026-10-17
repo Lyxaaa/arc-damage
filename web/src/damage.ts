@@ -16,6 +16,7 @@ export interface Weapon {
 
 export interface Throwable {
   id: string
+  name?: string
   damage: Record<string, number>
 }
 
