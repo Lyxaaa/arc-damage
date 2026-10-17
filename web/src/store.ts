@@ -9,6 +9,10 @@ interface ViewState {
   setThrowable: (id: string | null) => void
   setWeapon: (id: string | null) => void
   strip: boolean
+  rounds: number
+  grenades: number
+  accuracy: number
+  setLoadout: (p: Partial<Pick<ViewState, 'rounds' | 'grenades' | 'accuracy'>>) => void
   select: (b: string | null) => void
   toggle: (b: string) => void
   setStrip: (v: boolean) => void
@@ -25,6 +29,10 @@ export const useView = create<ViewState>((set) => ({
   setThrowable: (throwable) => set({ throwable }),
   setWeapon: (weapon) => set({ weapon }),
   strip: false,
+  rounds: Number(new URLSearchParams(location.search).get('rounds') ?? 30),
+  grenades: Number(new URLSearchParams(location.search).get('nades') ?? 0),
+  accuracy: Number(new URLSearchParams(location.search).get('acc') ?? 0.7),
+  setLoadout: (p) => set(p),
   select: (selected) => set({ selected }),
   toggle: (b) =>
     set((s) => {

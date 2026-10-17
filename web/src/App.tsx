@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { LAYER_COLOR, buildTree, splitByBone, type Layer, type PartInfo, type TreeNode } from './parts'
 import { useView } from './store'
+import { evaluate } from './loadout'
 import { grenadeKill, grenadesToBreak, killPath, shotsToBreak, type Throwable, type Weapon } from './damage'
 
 declare global {
@@ -119,7 +120,7 @@ function Shots({ w, sel, parts }: { w: Weapon; sel: PartInfo; parts: PartInfo[] 
 }
 
 function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
-  const { strip, ghost, setStrip, setGhost, reset, selected, weapon, setWeapon, throwable, setThrowable } = useView()
+  const { strip, ghost, setStrip, setGhost, reset, selected, weapon, setWeapon, throwable, setThrowable, rounds, grenades, accuracy, setLoadout } = useView()
   const [weapons, setWeapons] = useState<Weapon[]>([])
   const [throwables, setThrowables] = useState<Throwable[]>([])
   useEffect(() => {
@@ -130,6 +131,8 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
   const g = throwables.find((x) => x.id === throwable)
   const kp = w ? killPath(w, parts) : null
   const gk = g ? grenadeKill(g, parts) : null
+  const res = w || g ? evaluate({ weapon: w ?? null, rounds, throwable: g ?? null, grenades, accuracy }, parts) : null
+  const verdictColor = { Short: '#e5534b', Close: '#d4a72c', Comfortable: '#57ab5a', Decimating: '#39c5cf' }
   const sel = parts.find((p) => p.bone === selected)
   const legend = Object.entries(LAYER_COLOR)
   const sum = (l: Layer) => parts.filter((p) => p.layer === l).reduce((s, p) => s + (p.hp ?? 0), 0)
@@ -148,6 +151,20 @@ function Panel({ tree, parts }: { tree: TreeNode[]; parts: PartInfo[] }) {
           <option value="">Grenade…</option>
           {throwables.map((x) => <option key={x.id} value={x.id}>{x.name ?? x.id}</option>)}
         </select>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center', fontSize: 12 }}>
+          <label>Rounds <input type="number" min={0} value={rounds} onChange={(e) => setLoadout({ rounds: Math.max(0, +e.target.value) })} style={{ width: 52 }} /></label>
+          <label>Grenades <input type="number" min={0} value={grenades} onChange={(e) => setLoadout({ grenades: Math.max(0, +e.target.value) })} style={{ width: 44 }} /></label>
+        </div>
+        <label style={{ fontSize: 12 }}>Accuracy {Math.round(accuracy * 100)}%
+          <input type="range" min={0.1} max={1} step={0.05} value={accuracy} onChange={(e) => setLoadout({ accuracy: +e.target.value })} style={{ width: '100%' }} />
+        </label>
+        {res && (
+          <div style={{ fontSize: 12 }}>
+            <b style={{ color: verdictColor[res.verdict] }}>{res.verdict}</b> · {(res.coverage * 100).toFixed(0)}% of a kill
+            {res.weaponKills > 0 && res.grenadeKills > 0 ? ` (weapon ${(res.weaponKills * 100).toFixed(0)}%, grenades ${(res.grenadeKills * 100).toFixed(0)}%)` : ''}
+            <span style={{ color: '#8a949d' }}> · estimate</span>
+          </div>
+        )}
         {kp && <div style={{ fontSize: 12 }}>Kill (est.): {kp.total} {w!.id} hit(s) via {kp.bone}{kp.plateHits ? ` (${kp.plateHits} on plates)` : ''}</div>}
         {gk && <div style={{ fontSize: 12 }}>Kill (est.): {gk.count} {g!.id} via {gk.bone}</div>}
         <button onClick={reset} style={{ alignSelf: 'flex-start' }}>Reset</button>
